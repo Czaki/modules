@@ -5,4 +5,109 @@ Modules
 Code organization
 =================
 
-Working with whole code in one file could create
+It is easier to found something in code
+if code is organized in short functions 
+and this functions are grouped in some logical way
+(For example one group for reading data, 
+second for perform calculation and third for prepare summary).
+
+The most common way is to keep such groups in separated files 
+or if codebase is bigger then in separated directories.
+
+As all common language Python support this. 
+In Python such organized units are called modules and packages. 
+
+Documentation: https://docs.python.org/3/tutorial/modules.html
+
+Understand import
++++++++++++++++++
+
+Lets have file ``sample_module.py`` with content
+
+.. code-block:: python
+
+    def hello_world():
+        print("Hello world")
+
+If user run python shell inside same directory as
+file ``sample_module.py`` is saved then fou could use it 
+in two way
+
+.. code-block:: python
+    
+    import sample_module
+
+    sample_module.hello_world()
+
+and 
+
+.. code-block:: python
+    
+    from sample_module import hello_world
+
+    hello_world()
+
+The first one need more characters for
+call buts provide explicit information from which module 
+function is called. It is useful if code use more 
+than one module with same named function
+
+Second one produce shorter code and its nice 
+when writing single task script or in jupyter notebooks.
+
+Assume that ``sample_module`` growth enough to split it on multiple 
+files, but we do not want to need to fix import
+in our previous scripts.
+
+
+
+
+Code Organization Problems
+++++++++++++++++++++++++++
+This section describe typical problems
+which user could meet when work with
+code split on separate files and possible
+strategies to solve its.
+
+Circular import 
+~~~~~~~~~~~~~~~
+The problem 
+
+Call file form package using path
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Do not call file which is inside package providing path to it. 
+
+.. code-block:: bash
+
+    $ python path/to/file.py
+
+It will fail if its used any relative import.
+Use approach presented in `Calling code from package/module`_
+
+Name collision with existing library
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Python search for module to load is similar for shell searching 
+for executable. This list could be obtain from ``sys.path`` variable. 
+Byt default it contains script directory and some set of path
+from Python interpreter installation. It could be extended
+from Python code or using ``PYTHONPATH`` environment variable. 
+This is very powerful mechanism, but there is possibility that 
+pearson witting code use same name for his own top level package/module
+as package already installed, even builtin one. 
+Sample of such situation could be found in 
+``sample_code/path_polution_example``. 
+
+So if after some unrelated changes part of code
+starts failing with ``AttributeError`` or 
+``ImportError`` then check if some of
+new files [#git_reason]_ does not collide with some of python package installed in you environment. 
+
+
+Calling code from package/module
+++++++++++++++++++++++++++++++++
+
+Exercises
+=========
+
+.. [#git_reason] History of changes could be checked using VCS (like GIT). Next reason to use version control system.
