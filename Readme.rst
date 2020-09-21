@@ -57,9 +57,22 @@ when writing single task script or in jupyter notebooks.
 
 Assume that ``sample_module`` growth enough to split it on multiple 
 files, but we do not want to need to fix import
-in our previous scripts.
+in our previous scripts. Then this code could be organized in package. 
 
+But import inside package use different syntax.
 
+.. code-block:: python
+
+    from sample_module import sub_module
+
+or
+
+.. code-block:: python
+
+    from . import sub_module
+
+Exercises
+=========
 
 
 Code Organization Problems
@@ -107,7 +120,16 @@ new files [#git_reason]_ does not collide with some of python package installed 
 Calling code from package/module
 ++++++++++++++++++++++++++++++++
 
-Exercises
-=========
+Additional exercises
+====================
+
+Exercise 1
+++++++++++
+Solve circular dependencies problem in ``circular_import1`` using delayed import.
+
+Exercise 2
+++++++++++
+Solve circular dependencies problem in ``circular_import2`` by export problematic functions to additional module.
+
 
 .. [#git_reason] History of changes could be checked using VCS (like GIT). Next reason to use version control system.
