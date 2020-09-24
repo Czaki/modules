@@ -150,7 +150,7 @@ This is very powerful mechanism, but there is possibility that
 pearson witting code use same name for his own top level package/module
 as package already installed, even builtin one. 
 Sample of such situation could be found in 
-``sample_code/path_polution_example``. 
+``sample_code/path_pollution_example``. 
 
 So if after some unrelated changes part of code
 starts failing with ``AttributeError`` or 
@@ -161,14 +161,43 @@ new files [#git_reason]_ does not collide with some of python package installed 
 Calling code from package/module
 ++++++++++++++++++++++++++++++++
 
+There are scenario where some code from function or module could be called as separated program.
+Because of import mechanism in Python calling its using path to file is a bad idea. 
+
+Beside simple solution of creating wrapping script. Ex:
+
+.. code-block:: python 
+    
+    from example_package.module1 import submodule1_function1
+
+    submodule1_function1()
+
+there is option to use ``-m`` flag (PEP 338):
+
+.. code-block:: bash
+
+    $ python -m example_package.module1
+
+Running same code on import (side effect) is bad practice. 
+There is special variable ``__name__``. 
+If module is run as script its value is ``"__main__"``. 
+
+Because of this all code which should be executed only if using module as script 
+such be put under such clause:
+
+.. code-block:: python
+
+    if __name__ == "__main__":
+        run_code()
+
 Additional exercises
 ====================
 
-Exercise 1
+Exercise 3
 ++++++++++
 Solve circular dependencies problem in ``circular_import1`` using delayed import.
 
-Exercise 2
+Exercise 4
 ++++++++++
 Solve circular dependencies problem in ``circular_import2`` by export problematic functions to additional module.
 
