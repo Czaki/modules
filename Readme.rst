@@ -71,8 +71,49 @@ or
 
     from . import sub_module
 
+of course package elements could be modules or packages. 
+Bellow there is structure of ``example_package`` from ``sample_code/import_examples``
+
+.. code-block::
+
+    .
+    ├── example_package
+    │   ├── __init__.py
+    │   ├── example_subpackage1
+    │   │   ├── __init__.py
+    │   │   ├── submodule1.py
+    │   │   └── submodule2.py
+    │   ├── example_subpackage2
+    │   │   ├── __init__.py
+    │   │   ├── submodule1.py
+    │   │   └── submodule2.py
+    │   ├── module1.py
+    │   └── module2.py
+    └── sample_script.py
+
 Exercises
 =========
+
+Exercise 1
+++++++++++
+Read code from ``sample_code/import_examples`` and check if you understand all constructions used in it. 
+
+Exercise 2
+++++++++++
+Create project which will calculate base statistics of of ``data/iris.csv`` 
+Which will calculate basic statistics (``mean``, ``median`` and ``std``) of each column. 
+Project structure should be:
+
+.. code-block::
+
+    ├── iris_analysis
+    │   ├── __init__.py
+    │   ├── io
+    │   │   ├── __init__.py
+    │   │   ├── load.py
+    │   │   └── save.py
+    │   └── calculate.py
+    └── run_analysis.py
 
 
 Code Organization Problems
