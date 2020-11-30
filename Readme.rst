@@ -94,14 +94,17 @@ Bellow there is structure of ``example_package`` from ``sample_code/import_examp
 Exercises
 =========
 
+All files present in https://gitlab.uw.edu.pl/python-tools/modules.
+
 Exercise 1
 ++++++++++
 Read code from ``sample_code/import_examples`` and check if you understand all constructions used in it. 
 
 Exercise 2
 ++++++++++
-Create project which will calculate base statistics of of ``data/iris.csv`` 
-Which will calculate basic statistics (``mean``, ``median`` and ``std``) of each column. 
+Create project which will calculate base statistics of (``mean``, ``median`` and ``std``)
+of every column except ``variety`` from ``data/iris.csv`` file.
+
 Project structure should be:
 
 .. code-block::
@@ -115,6 +118,19 @@ Project structure should be:
     │   └── calculate.py
     └── run_analysis.py
 
+File ``iris_analysis/io/load.py`` should contain functions needed to load and parse ``data/iris.csv``.
+File ``iris_analysis/io/save.py`` should contain functions needed to save result to ``.csv`` file.
+File ``iris_analysis/calculate.py`` should contain functions needed for statistic calculation.
+File ``run_analysis.py`` should be script which import proper functions from ``iris_analysis`` package and
+call them to calculate statistics. Each task should be performed using code from module with proper semantic name.
+Script should have two arguments: path to ada file and path to result file.
+
+Example run:
+
+.. code-block:: bash
+
+    $ python run_analysis.py data/iris.csv result.csv
+
 
 Code Organization Problems
 ++++++++++++++++++++++++++
@@ -125,7 +141,35 @@ strategies to solve its.
 
 Circular import 
 ~~~~~~~~~~~~~~~
-The problem 
+The problem of circular import happen when there is circle in graph of top level imports.
+Simple example is placed in ``sample_code/circular_import1``.
+
+There are two basic methods to solve such problem:
+
+1. Refactor code. Move functions between modules, extract part of code to new module
+
+2. Delayed import. Move part of import from top level to function body.
+
+For example from:
+
+.. code-block:: python
+
+    from a import b
+
+    def func():
+        val = do_something()
+        b(val)
+
+to:
+
+.. code-block:: python
+
+    def func():
+        from a import b
+
+        val = do_something()
+        b(val)
+
 
 Call file form package using path
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
